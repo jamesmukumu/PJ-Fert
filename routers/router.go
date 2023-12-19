@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 
 	middlewares "github.com/jamesmukumu/backup/Middlewares"
 	cycles "github.com/jamesmukumu/backup/controllers/Cycles"
@@ -16,6 +18,13 @@ import (
 func Handleallroutes() {
 	fmt.Println("Listening for requests at 7000")
 	db.Connectmongo()
+	dotenv := godotenv.Load()
+	
+      if dotenv != nil {
+		log.Fatal(dotenv.Error())
+	  }
+
+     port := os.Getenv("PORT")
 	Router := mux.NewRouter()
 	Router.HandleFunc("/post/user",users.Postuser).Methods("POST")
     Router.HandleFunc("/login/user",users.Loginuser).Methods("POST")
@@ -36,7 +45,7 @@ func Handleallroutes() {
    Router.HandleFunc("/fetch/pastsafedays",cycles.FetchAccountsduesafe).Methods("GET")
 
 
- server :=http.ListenAndServe(":7000",Router)
+ server :=http.ListenAndServe(":"+port,Router)
 if  server !=nil {
 	log.Fatal(server)
 }
