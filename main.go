@@ -1,6 +1,6 @@
 package main
 
-import (
+import ( 
 	"fmt"
 
 	"github.com/jamesmukumu/backup/db"
@@ -8,10 +8,11 @@ import (
 )  
 
 func main(){ 
+	routers.Handleallroutes() 
 	fmt.Println("hello world")
 	  db.Connectmongo()
 	  db.Mensesdb()
-	 routers.Handleallroutes() 
+	 
 	
 } 
 
